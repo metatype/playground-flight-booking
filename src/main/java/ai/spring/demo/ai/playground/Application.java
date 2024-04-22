@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.reader.TextReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
-import org.springframework.ai.vectorstore.SimpleVectorStore;
+import org.springframework.ai.vectorstore.GemFireVectorStore;
+import org.springframework.ai.vectorstore.GemFireVectorStore.GemFireVectorStoreConfig;;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -53,6 +54,6 @@ public class Application implements AppShellConfigurator {
 
 	@Bean
 	public VectorStore vectorStore(EmbeddingClient embeddingClient) {
-		return new SimpleVectorStore(embeddingClient);
+		return new GemFireVectorStore(new GemFireVectorStoreConfig().setIndexName("playground").setPort(7071), embeddingClient);
 	}
 }
